@@ -40,6 +40,14 @@
 		</script>
 
 
+		<script type="text/x-handlebars" data-template-name="components/btn-choice">
+			<div class="col-md-3 col-sm-12">
+				<button type="button" {{action 'report'}} class="btn btn-lg btn-default btn-block">
+					{{ choice }} : {{ correct }}
+				</button>
+			</div>
+		</script>
+
 		<script type="text/x-handlebars" id="quiz">
 			<div class="container-fluid">
 				<div class="page-header">
@@ -55,6 +63,12 @@
 						<h1 class='text-center'>Answer: {{answer}}</h1>
 					</div>
 					{{/if}}
+				</div>
+				<div class="row">
+					{{#each choice in choices}}
+						{{#btn-choice choice=choice correct=correctReading}}
+						{{/btn-choice}}
+					{{/each}}
 				</div>
 				<div class="row">
 					{{#each choice in choices}}

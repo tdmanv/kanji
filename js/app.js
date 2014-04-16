@@ -13,6 +13,7 @@ App.QuizController = Ember.ObjectController.extend({
 	numCorrect: 0,
 	numWrong: 0,
 	correct: 0,
+	correctReading: '',
 	choices: ['','','',''],
 	question: '',
 	randomize: function() {
@@ -32,6 +33,7 @@ App.QuizController = Ember.ObjectController.extend({
 		this.set('correct', correctIdx);
 		this.set('question', kanji[idxs[correctIdx]].kanji);
 		this.set('answer', kanji[idxs[correctIdx]].reading + ", " + kanji[idxs[correctIdx]].meaning);
+		this.set('correctReading', kanji[idxs[correctIdx]].reading);
 	},
   actions: {
     reset: function() {
@@ -60,14 +62,27 @@ App.QuizController = Ember.ObjectController.extend({
   }
 });
 
-/*
-App.MyButtonComponent = Ember.Component.extend({
-	click: function() {
-		this.sendAction('action', choice);
+App.BtnChoiceComponent = Ember.Component.extend({
+	correct: '',
+	classNameBindings: ['showCorrect::btn-success'],
+	showCorrect: true,
+	actions: {
+		report: function(choice) {
+			if (choice == this.get('correct')) {
+				alert("correct!");
+      	this.incrementProperty('numCorrect');
+			} else {
+				alert("wrong!");
+      	this.incrementProperty('numWrong');
+			}
+			this.sendAction('action', choice);
+		}
 	}
-}*/
+});
 
 
+
+// We'll get these from flask at some point.
 var kanji = [{
 	"id": 0,
 		"kanji": "\u5b66",
